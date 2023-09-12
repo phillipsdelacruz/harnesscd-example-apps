@@ -1,4 +1,3 @@
-...  
 {{- if .Values.dockercfg}}  
 apiVersion: v1  
 kind: Secret  
@@ -29,6 +28,10 @@ spec:
       labels:
         app: web
     spec:
+      {{- if .Values.dockercfg}}  
+      imagePullSecrets:  
+      - name: {{.Values.name}}-dockercfg  
+      {{- end}}     
       containers:
         - name: nginx
           image: {{.Values.image}}
